@@ -1,31 +1,18 @@
 import './App.css';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Root from './routes/root';
 import Product from './routes/product';
-import HeaderComponent from './components/HeaderComponent';
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-  },
-  {
-    path: "product/:productId",
-    element: <Product />,
-  },
-]);
+import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 
 function App() {
   return (
-    <div className="App">
-      <HeaderComponent />
-      <main>
-        <RouterProvider router={router} />
-      </main>
-    </div>
+    <Router>
+        <HeaderComponent />
+        <Routes>
+          <Route path="/" element={<Root />} />
+          <Route path="product/:productId" element={<Product />} />
+        </Routes>
+      </Router>
   );
 }
 
