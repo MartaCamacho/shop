@@ -29,7 +29,7 @@ const Root = () => {
             const filtered = productsToFilter.filter(product => product.brand.toLowerCase().includes(search) || product.model.toLowerCase().includes(search));
             setFilteredProducts(filtered);
         }
-    }, [search])
+    }, [search]); // eslint-disable-line
 
     const fetchData = () => {
         axios.get("https://itx-frontend-test.onrender.com/api/product")
