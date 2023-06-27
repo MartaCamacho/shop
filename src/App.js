@@ -10,7 +10,9 @@ function App() {
         <HeaderComponent />
         <Routes>
           <Route path="/" element={<Root />} />
-          <Route path="product/:productId" element={<Product />} />
+          <Route path="/product">
+            <Route path="/product/:productId" element={<Product />} />
+          </Route>
         </Routes>
       </Router>
   );
