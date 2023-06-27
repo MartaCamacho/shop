@@ -7,12 +7,28 @@ const Root = () => {
     const [search, setSearch] = useState(null);
 
     useEffect(() => {
-      axios.get("https://itx-frontend-test.onrender.com/api/product")
-      .then(response => {
-        setProducts(response.data);
-        console.log(response.data)
-      })
-      .catch(error => console.error(error));
+        if(localStorage.getItem("products")) {
+            const item = JSON.parse(localStorage.getItem("products"));
+            const now = new Date();
+
+            if (now.getTime() > item.expiry) {
+                localStorage.removeItem("products");
+                return null;
+            }
+            return setProducts(item.value);
+        } else {
+            axios.get("https://itx-frontend-test.onrender.com/api/product")
+            .then(response => {
+              setProducts(response.data);
+              const now = new Date();
+                const item = {
+                    value: response.data,
+                    expiry: now.getTime() +  3600000,
+                };
+                localStorage.setItem("products", JSON.stringify(item));
+            })
+            .catch(error => console.error(error));
+        }
     }, []);
 
     useEffect(() => {
