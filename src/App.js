@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import Root from './routes/root';
 import Product from './routes/product';
+import HeaderComponent from './components/HeaderComponent';
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="App">
-    holi
-      <RouterProvider router={router} />
+      <HeaderComponent />
+      <main>
+        <RouterProvider router={router} />
+      </main>
     </div>
   );
 }
