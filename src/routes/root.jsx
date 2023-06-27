@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import ListItemComponent from '../components/ListItemComponent/ListItemComponent';
 
 const Root = () => {
     const [products, setProducts] = useState(null);
@@ -13,21 +14,12 @@ const Root = () => {
 
             if (now.getTime() > item.expiry) {
                 localStorage.removeItem("products");
-                return null;
+                fetchData();
+            } else {
+                return setProducts(item.value);
             }
-            return setProducts(item.value);
         } else {
-            axios.get("https://itx-frontend-test.onrender.com/api/product")
-            .then(response => {
-              setProducts(response.data);
-              const now = new Date();
-                const item = {
-                    value: response.data,
-                    expiry: now.getTime() +  3600000,
-                };
-                localStorage.setItem("products", JSON.stringify(item));
-            })
-            .catch(error => console.error(error));
+            fetchData();
         }
     }, []);
 
@@ -38,19 +30,34 @@ const Root = () => {
             setFilteredProducts(filtered);
         }
     }, [search])
+
+    const fetchData = () => {
+        axios.get("https://itx-frontend-test.onrender.com/api/product")
+            .then(response => {
+              setProducts(response.data);
+              const now = new Date();
+                const item = {
+                    value: response.data,
+                    expiry: now.getTime() +  3600000,
+                };
+                localStorage.setItem("products", JSON.stringify(item));
+            })
+            .catch(error => console.error(error));
+    }
     
 
     const productsToRender = filteredProducts ? filteredProducts : products;
 
   return (
-    <div>
-        <input type="text" onChange={(event) => setSearch(event.target.value)}/>
-        {productsToRender ? productsToRender.map(product => {
-            return <div>
-                        <div>{product.brand}</div>
-                        <div>{product.model}</div>
-                    </div>
-        }) : <></>}
+    <div className="home-page-container">
+        <div className="search-input-container">
+            <input type="text" className="search-input" onChange={(event) => setSearch(event.target.value)} placeholder="Search product"/>
+        </div>
+        <div className="search-items-container">
+            {productsToRender ? productsToRender.map(product => {
+                return <ListItemComponent item={product}/>
+            }) : <></>}
+        </div>
     </div>
   )
 }

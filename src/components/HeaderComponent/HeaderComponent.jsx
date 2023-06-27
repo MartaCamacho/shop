@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 const HeaderComponent = () => {
   const params = useParams();
 
-  console.log(params)
+  console.log(params, window.location)
   const breadCrumbItem = (url, text) => {
     if(window.location.pathname === url) {
       return <div>{text}</div>
