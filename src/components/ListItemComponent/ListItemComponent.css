@@ -5,13 +5,15 @@
     flex-direction: column;
     align-items: center;
     margin-top: 40px;
-    box-shadow: 0 0 10px #9C9C9C;
+    background-color: #fff;
     border-radius: 8px;
     padding: 20px 5px;
+    color: #272727;
+    text-decoration: none;
 }
 
-.list-item-container:not(:hover) {
-    text-decoration: none;
+.list-item-container:hover {
+    box-shadow: 0 0 10px #9C9C9C;
 }
 
 .list-item-image {
@@ -28,7 +30,7 @@
 
 .list-item-price {
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 25px;
 }
 
 @media (max-width: 1210px) {
