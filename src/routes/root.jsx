@@ -55,7 +55,7 @@ const Root = () => {
   };
 
   const productsToRender = filteredProducts ? filteredProducts : products;
-  console.log(productsToRender);
+  
   return (
     <div className="home-page-container">
       <div className="search-input-container">
