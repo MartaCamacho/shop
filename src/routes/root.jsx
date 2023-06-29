@@ -67,8 +67,9 @@ const Root = () => {
         />
       </div>
       <div className="search-items-container">
-        {loading ? <LoadingComponent /> : <></>}
-        {productsToRender && productsToRender.length > 0 ? (
+        {loading ? <LoadingComponent /> 
+        : 
+        productsToRender && productsToRender.length > 0 ? (
           productsToRender.map((product) => {
             return <ListItemComponent item={product} key={product.id} />;
           })

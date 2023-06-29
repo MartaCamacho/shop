@@ -2,10 +2,13 @@ import React from 'react';
 import './HeaderComponent.css';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { usePageInfo } from "../../context/pageContext";
 
 const HeaderComponent = (props) => {
   let location = useLocation();
   const productId = location.pathname.replace('/product/');
+  const { productDetails } = usePageInfo();
+  console.log(productDetails)
 
   const breadCrumbItem = (url, text, currentPage) => {
     if (currentPage) {
@@ -27,7 +30,7 @@ const HeaderComponent = (props) => {
             <li>
               {breadCrumbItem(
                 `/product/${productId}`,
-                "Product",
+                productDetails?.model || "Product",
                 location.pathname.includes("/product/")
               )}
             </li>
