@@ -8,6 +8,7 @@ export const PageProvider = ({ children }) => {
     const [productDetails, setProductDetails] = useState(null);
     const [shoppingCartItems, setShoppingCartItems] = useState(null);
 
+
     return (
         <PageContext.Provider value={{productDetails, setProductDetails, shoppingCartItems, setShoppingCartItems}}>
             {children}

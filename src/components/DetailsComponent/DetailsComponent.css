@@ -14,22 +14,34 @@
     display: flex;
     justify-content: center;
     margin: 0 auto;
+    height: 200px;
 }
 
 .product-details-text,
-.details-dropdown-container {
+.details-actions-container {
     border: 1px solid #9C9C9C;
     background-color: #fff;
     display: flex;
+    flex-direction: column;
     align-items: center;
     border-radius: 8px;
-    padding: 20px 40px;
+    padding: 50px 40px;
     width: 500px;
     max-width: 100%;
 }
 
+.details-actions-container {
+    margin-top: 40px;
+}
+
+.details-dropdown-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .product-details-container ul {
-    line-height: 20px;
+    line-height: 30px;
 }
 
 .product-details-title {
@@ -61,6 +73,10 @@
     position: relative;
 }
 
+.details-dropdown-input.error {
+    border: 1px solid red;
+}
+
 .details-dropdown-input span {
     font-size: 23px;
 }
@@ -76,18 +92,78 @@
     overflow: hidden;
 }
 
-.details-dropdown-item {
+.details-dropdown-item,
+.shop-button {
     height: 45px;
     padding: 0 12px;
     display: flex;
     align-items: center;
     cursor: pointer;
+    background-color: #fff;
+    z-index: 0;
 }
 
+.details-dropdown-item:first-child {
+    z-index: 2;
+}
 .details-dropdown-item + .details-dropdown-item {
     border-top: 1px solid #272727;
 }
 
 .details-dropdown-item:hover {
     background-color: #e7e7e7;
+}
+
+.shop-button {
+    margin-top: 40px;
+    border: 1px solid #272727;
+    border-radius: 6px;
+    background-color: #189ab4;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    width: 300px;
+    max-width: 100%;
+    justify-content: center;
+}
+
+.shop-button:hover {
+    box-shadow: 0 0 10px #9C9C9C;
+    font-size: 20px;
+}
+
+@media (max-width: 1000px) {
+    .product-details-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-details-text {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .product-details-text, 
+    .details-actions-container {
+        border-radius: 0px;
+        border: 0px;
+    }
+
+    .details-dropdown-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .details-dropdown-container div:last-child .details-dropdown-input {
+        margin-top: 20px;
+    } 
+
+    .details-dropdown-list {
+        z-index: 1;
+    }
 }
