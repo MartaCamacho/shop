@@ -4,7 +4,7 @@ import axios from 'axios';
 import './DetailsComponent.css';
 
 const DetailsComponent = () => {
-  const { productDetails, setShoppingCartItems, shoppingCartItems } = usePageInfo();
+  const { productDetails, setShoppingCartItems } = usePageInfo();
   const {
     brand,
     colors,
@@ -47,7 +47,7 @@ const DetailsComponent = () => {
     return () => {
         document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, []); // eslint-disable-line
 
   const handleClickOutside = useCallback((event) => {
     if (colorsRef.current && !colorsRef.current.contains(event.target)) {
