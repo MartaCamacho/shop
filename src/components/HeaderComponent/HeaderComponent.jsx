@@ -7,8 +7,7 @@ import { usePageInfo } from "../../context/pageContext";
 const HeaderComponent = (props) => {
   let location = useLocation();
   const productId = location.pathname.replace('/product/');
-  const { productDetails } = usePageInfo();
-  console.log(productDetails)
+  const { productDetails, shoppingCartItems } = usePageInfo();
 
   const breadCrumbItem = (url, text, currentPage) => {
     if (currentPage) {
@@ -40,6 +39,7 @@ const HeaderComponent = (props) => {
         </ul>
         <div className="header-cart">
           <img src="/images/cart-shopping-solid.svg" alt="cart" />
+          {shoppingCartItems ? <span>{shoppingCartItems}</span> : <></>}
         </div>
       </div>
     </div>
