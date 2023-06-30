@@ -21,7 +21,7 @@ const Product = () => {
       console.error(error);
       setloading(false);
     });
-  }, []);
+  }, []); // eslint-disable-line
   
 
   return (
