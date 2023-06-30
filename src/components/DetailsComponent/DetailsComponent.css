@@ -146,10 +146,25 @@
 }
 
 @media (max-width: 600px) {
+
     .product-details-text, 
     .details-actions-container {
         border-radius: 0px;
         border: 0px;
+        width: calc(100vw - 80px);
+        font-size: 14px;
+        max-width: 100vw;
+    }
+
+    .product-details-image {
+        border-radius: 0px;
+        border: 0px;
+        padding:100px 0;
+        width: 100vw;
+    }
+
+    .product-details-container ul {
+        width: calc(100% - 24px);
     }
 
     .details-dropdown-container {
@@ -165,5 +180,10 @@
 
     .details-dropdown-list {
         z-index: 1;
+    }
+
+    .shop-button {
+        font-size: 18px;
+        max-width: calc(100% - 24px);
     }
 }
