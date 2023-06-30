@@ -100,7 +100,6 @@
     align-items: center;
     cursor: pointer;
     background-color: #fff;
-    z-index: 0;
 }
 
 .details-dropdown-item:first-child {

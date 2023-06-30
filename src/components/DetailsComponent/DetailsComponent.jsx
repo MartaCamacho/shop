@@ -92,7 +92,7 @@ const dropdownElement = (selected, items, onChange, open, show, ref, error, setE
                 <span>+</span>
               {show ? <div className="details-dropdown-list" ref={ref}>
                   {items ? items.map(item => {
-                    return <div key={item} onClick={() => [onChange(item), open(false), setError(false)]}  className="details-dropdown-item">
+                    return <div key={item} onClick={(e) => [e.stopPropagation(),onChange(item), open(false), setError(false)]}  className="details-dropdown-item">
                     {item}
                     </div>
                   }) : <></>}
