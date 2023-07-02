@@ -27,7 +27,7 @@ const Root = () => {
     } else {
       fetchData();
     }
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     if (products) {
