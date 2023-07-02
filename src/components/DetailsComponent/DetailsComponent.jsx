@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { usePageInfo } from "../../context/pageContext";
+import { usePageInfo } from '../../context/pageContext';
 import axios from 'axios';
 import './DetailsComponent.css';
 
 const DetailsComponent = () => {
-  const { productDetails, setShoppingCartItems } = usePageInfo();
+  const { productDetails, setShoppingCartItems, setItemWithExpiry, shoppingCartItems } = usePageInfo();
   const {
     brand,
     colors,
@@ -21,31 +21,32 @@ const DetailsComponent = () => {
     dimentions,
     weight,
     internalMemory,
-    id
+    id,
   } = productDetails;
   const [showColorDropdown, setShowColorDropdown] = useState(false);
   const [showMemoryDropdown, setShowMemoryDropdown] = useState(false);
   const [selectedColor, setSelectedColor] = useState(null);
-  const [memory, setMemory ] = useState(null);
+  const [memory, setMemory] = useState(null);
   const [errorColor, setErrorColor] = useState(false);
   const [errorMemory, setErrorMemory] = useState(false);
 
   const colorsRef = useRef(null);
   const memoryRef = useRef(null);
 
-
   useEffect(() => {
-    if(colors && colors.length === 1) {
-      setSelectedColor(colors[0])
+    if (colors && colors.length === 1) {
+      setSelectedColor(colors[0]);
     }
 
-    if(internalMemory && internalMemory.length === 1) {
+    if (internalMemory && internalMemory.length === 1) {
       setMemory(internalMemory[0]);
     }
-  
-    document.addEventListener('mousedown', handleClickOutside, { passive: true });
+
+    document.addEventListener('mousedown', handleClickOutside, {
+      passive: true,
+    });
     return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []); // eslint-disable-line
 
@@ -58,48 +59,92 @@ const DetailsComponent = () => {
     }
   }, []);
 
-  
   const addToCart = () => {
-    if(!selectedColor || !memory) {
+    if (!selectedColor || !memory) {
       setErrorColor(!selectedColor);
       setErrorMemory(!memory);
       return;
     }
-  
+
     const headers = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
     const body = {
       id: id,
       colorCode: selectedColor,
-      storageCode: memory
+      storageCode: memory,
     };
-    axios.post("https://itx-frontend-test.onrender.com/api/cart", body, headers)
-    .then(response => {
-      setShoppingCartItems(response.data.count);
-    });
-};
+    axios
+      .post('https://itx-frontend-test.onrender.com/api/cart', body, headers)
+      .then((response) => {
+        setShoppingCartItems(shoppingCartItems + response.data.count);
+        setItemWithExpiry(shoppingCartItems + response.data.count, 'cartItems');
+        // show success message
+        const btn = document.getElementsByClassName('shop-button')[0];
   
+        btn.innerText = 'Added to cart!';
+        
+        setTimeout(function() {
+          btn.innerText = 'Add to Cart';
+        }, 2000);
+      })
+      .catch((error) => console.log(error));
+  };
 
-  const listItem = (title, data) => <li>
-                                        <span>{title}:</span> {data || '-'}
-                                    </li>
+  const listItem = (title, data) => (
+    <li>
+      <span>{title}:</span> {data || '-'}
+    </li>
+  );
 
-const dropdownElement = (selected, items, onChange, open, show, ref, error, setError) => {
-    return <div>
-              <div className={`details-dropdown-input ${error ? "error" : ""}`} onClick={() => open(true)}>
-                {selected || "Choose"}
-                <span>+</span>
-              {show ? <div className="details-dropdown-list" ref={ref}>
-                  {items ? items.map(item => {
-                    return <div key={item} onClick={(e) => [e.stopPropagation(),onChange(item), open(false), setError(false)]}  className="details-dropdown-item">
-                    {item}
+  const dropdownElement = (
+    selected,
+    items,
+    onChange,
+    open,
+    show,
+    ref,
+    error,
+    setError
+  ) => {
+    return (
+      <div>
+        <div
+          className={`details-dropdown-input ${error ? 'error' : ''}`}
+          onClick={() => open(true)}
+        >
+          {selected || 'Choose'}
+          <span>+</span>
+          {show ? (
+            <div className="details-dropdown-list" ref={ref}>
+              {items ? (
+                items.map((item) => {
+                  return (
+                    <div
+                      key={item}
+                      onClick={(e) => [
+                        e.stopPropagation(),
+                        onChange(item),
+                        open(false),
+                        setError(false),
+                      ]}
+                      className="details-dropdown-item"
+                    >
+                      {item}
                     </div>
-                  }) : <></>}
-                </div> : <></>}
-              </div>
+                  );
+                })
+              ) : (
+                <></>
+              )}
             </div>
-}
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="product-details-container">
@@ -108,35 +153,53 @@ const dropdownElement = (selected, items, onChange, open, show, ref, error, setE
       </div>
       <div>
         <div className="product-details-text">
-            <ul>
+          <ul>
             <li className="product-details-title">
-                <h1>
+              <h1>
                 {brand || '-'} {model || '-'}
-                </h1>
+              </h1>
             </li>
             <li className="product-details-price">{price || '- '}€</li>
-            {listItem("CPU", cpu)}
-            {listItem("RAM", ram)}
-            {listItem("OS", os)}
-            {listItem("Resolution", displayResolution)}
-            {listItem("Battery", battery)}
-            {listItem("Primary Camera", primaryCamera)}
-            {listItem("Secondary Camera", secondaryCamera)}
-            {listItem("Dimentions", dimentions)}
-            {listItem("Weight", weight)}
-            </ul>
+            {listItem('CPU', cpu)}
+            {listItem('RAM', ram)}
+            {listItem('OS', os)}
+            {listItem('Resolution', displayResolution)}
+            {listItem('Battery', battery)}
+            {listItem('Primary Camera', primaryCamera)}
+            {listItem('Secondary Camera', secondaryCamera)}
+            {listItem('Dimentions', dimentions)}
+            {listItem('Weight', weight)}
+          </ul>
         </div>
         <div className="details-actions-container">
-            <div className="details-dropdown-container">
-                {dropdownElement(selectedColor, colors, setSelectedColor, setShowColorDropdown, showColorDropdown, colorsRef, errorColor, setErrorColor)}
-                {dropdownElement(memory, internalMemory, setMemory, setShowMemoryDropdown, showMemoryDropdown, memoryRef, errorMemory, setErrorMemory)}
-            </div>
-            <div className="shop-button" onClick={() => addToCart()}>
-              Add to cart
-            </div>
+          <div className="details-dropdown-container">
+            {dropdownElement(
+              selectedColor,
+              colors,
+              setSelectedColor,
+              setShowColorDropdown,
+              showColorDropdown,
+              colorsRef,
+              errorColor,
+              setErrorColor
+            )}
+            {dropdownElement(
+              memory,
+              internalMemory,
+              setMemory,
+              setShowMemoryDropdown,
+              showMemoryDropdown,
+              memoryRef,
+              errorMemory,
+              setErrorMemory
+            )}
+          </div>
+          <div className="shop-button" onClick={() => addToCart()}>
+            Add to cart
+          </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 
