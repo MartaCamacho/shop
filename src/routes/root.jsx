@@ -2,16 +2,19 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ListItemComponent from '../components/ListItemComponent/ListItemComponent';
 import LoadingComponent from '../components/LoadingComponent/LoadingComponent';
+import { usePageInfo } from '../context/pageContext';
 
 const Root = () => {
+  const { setItemWithExpiry } = usePageInfo();
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [search, setSearch] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (localStorage.getItem('products')) {
-      const item = JSON.parse(localStorage.getItem('products'));
+    const savedProductList = localStorage.getItem('products');
+    if (savedProductList) {
+      const item = JSON.parse(savedProductList);
       const now = new Date();
 
       if (now.getTime() > item.expiry) {
@@ -43,19 +46,14 @@ const Root = () => {
       .get('https://itx-frontend-test.onrender.com/api/product')
       .then((response) => {
         setProducts(response.data);
-        const now = new Date();
-        const item = {
-          value: response.data,
-          expiry: now.getTime() + 3600000,
-        };
-        localStorage.setItem('products', JSON.stringify(item));
+        setItemWithExpiry(response.data, 'products');
         setLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.log(error));
   };
 
   const productsToRender = filteredProducts ? filteredProducts : products;
-  
+
   return (
     <div className="home-page-container">
       <div className="search-input-container">
@@ -67,9 +65,9 @@ const Root = () => {
         />
       </div>
       <div className="search-items-container">
-        {loading ? <LoadingComponent /> 
-        : 
-        productsToRender && productsToRender.length > 0 ? (
+        {loading ? (
+          <LoadingComponent />
+        ) : productsToRender && productsToRender.length > 0 ? (
           productsToRender.map((product) => {
             return <ListItemComponent item={product} key={product.id} />;
           })
