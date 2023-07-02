@@ -13,7 +13,7 @@ const Product = () => {
 
   useEffect(() => {
     const savedProduct = localStorage.getItem(productId);
-    if(savedProduct) {
+    if (savedProduct) {
       const item = JSON.parse(savedProduct);
       const now = new Date();
 

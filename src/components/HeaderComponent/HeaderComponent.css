@@ -37,8 +37,8 @@
 }
 
 .bread-crumb-link {
-    color: #189ab4;
-    text-decoration: none;
+  color: #189ab4;
+  text-decoration: none;
 }
 
 .header-cart {
@@ -62,12 +62,11 @@
 }
 
 @media (max-width: 770px) {
-  
   .bread-crumb-no-link,
   .bread-crumb-link {
-      white-space: nowrap;
-      max-width: 100px;
-      text-overflow: ellipsis;
-      overflow: hidden;
+    white-space: nowrap;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }

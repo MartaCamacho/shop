@@ -1,48 +1,48 @@
 .list-item-container {
-    width: 23%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px 5px;
-    color: #272727;
-    text-decoration: none;
+  width: 23%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px 5px;
+  color: #272727;
+  text-decoration: none;
 }
 
 .list-item-container:hover {
-    box-shadow: 0 0 10px #9C9C9C;
+  box-shadow: 0 0 10px #9c9c9c;
 }
 
 .list-item-image {
-    width: 160px;
-    height: 212px;
-    margin-bottom: 15px;
+  width: 160px;
+  height: 212px;
+  margin-bottom: 15px;
 }
 
 .list-item-name span + span::before {
-    content: "/";
-    padding-right: 5px;
-    margin-left: 5px;
+  content: '/';
+  padding-right: 5px;
+  margin-left: 5px;
 }
 
 .list-item-price {
-    margin-top: 10px;
-    font-size: 25px;
+  margin-top: 10px;
+  font-size: 25px;
 }
 
 @media (max-width: 1210px) {
-    .list-item-container {
-        width: 30%;
-    }
+  .list-item-container {
+    width: 30%;
+  }
 }
 
 @media (max-width: 770px) {
-    .list-item-container {
-        width: 90%;
-        margin: 20px auto 0;
-        max-width: 240px;
-    }
+  .list-item-container {
+    width: 90%;
+    margin: 20px auto 0;
+    max-width: 240px;
+  }
 }

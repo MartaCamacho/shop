@@ -4,7 +4,12 @@ import axios from 'axios';
 import './DetailsComponent.css';
 
 const DetailsComponent = () => {
-  const { productDetails, setShoppingCartItems, setItemWithExpiry, shoppingCartItems } = usePageInfo();
+  const {
+    productDetails,
+    setShoppingCartItems,
+    setItemWithExpiry,
+    shoppingCartItems,
+  } = usePageInfo();
   const {
     brand,
     colors,
@@ -81,10 +86,10 @@ const DetailsComponent = () => {
         setItemWithExpiry(shoppingCartItems + response.data.count, 'cartItems');
         // show success message
         const btn = document.getElementsByClassName('shop-button')[0];
-  
+
         btn.innerText = 'Added to cart!';
-        
-        setTimeout(function() {
+
+        setTimeout(function () {
           btn.innerText = 'Add to Cart';
         }, 2000);
       })

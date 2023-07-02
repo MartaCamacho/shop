@@ -10,10 +10,10 @@ export const PageProvider = ({ children }) => {
 
   useEffect(() => {
     const cartItems = localStorage.getItem('cartItems');
-    if(cartItems) {
+    if (cartItems) {
       const cartItemsParsed = JSON.parse(cartItems);
       const now = new Date();
-  
+
       if (now.getTime() > cartItemsParsed.expiry) {
         localStorage.removeItem('cartItems');
       } else {
@@ -21,7 +21,6 @@ export const PageProvider = ({ children }) => {
       }
     }
   }, []);
-  
 
   const setItemWithExpiry = (value, name, extra) => {
     const now = new Date();
@@ -29,7 +28,7 @@ export const PageProvider = ({ children }) => {
       value: value,
       expiry: now.getTime() + 3600000,
     };
-    if(extra) {
+    if (extra) {
       item.extra = extra;
     }
     localStorage.setItem(name, JSON.stringify(item));

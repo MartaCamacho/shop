@@ -7,14 +7,14 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 function App() {
   return (
     <Router>
-        <HeaderComponent />
-        <Routes>
-          <Route path="/" element={<Root />} />
-          <Route path="/product">
-            <Route path=":productId" element={<Product />} />
-          </Route>
-        </Routes>
-      </Router>
+      <HeaderComponent />
+      <Routes>
+        <Route path="/" element={<Root />} />
+        <Route path="/product">
+          <Route path=":productId" element={<Product />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
